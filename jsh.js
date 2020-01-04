@@ -115,7 +115,7 @@ function generateRandomPassword(passwordLength){
     return result
 }
 
-
+.
 
 // Write password to the #password input
 function writePassword() {
