@@ -9,11 +9,14 @@ var allCharacters=[]
 
 
 var passwordLength=0
-var specialCharacters=false;
-var lowerCase=false;
-var numbers=false;
-var upperCase=false;
-
+// var specialCharacters=false;
+// var lowerCase=false;
+// var numbers=false;
+// var upperCase=false;
+var specialCharactersPref;
+var numbersPref;
+var upperCasePref;
+var lowerCasePref;
 
 function promptPassword() {
 var passwordPrompt = prompt("What is your password length?");
@@ -30,20 +33,26 @@ validateLength(passwordPrompt)
 }
 //this function can be 
 function promptSpecialCharacters() {
-var specialCharactersPref= confirm("Click OK to confirm including special characters?");
+ specialCharactersPref= confirm("Click OK to confirm including special characters?");
+console.log("confirm ",specialCharactersPref)
+promptLowerCase()
+}
 function checkSpecialCharacters(preference){
     if(specialCharactersPref){
         specialCharacters=true
     }
     //function call to next confirm
     promptLowerCase()
+
+    checkSpecialCharacters(specialCharactersPref)
 }
-checkSpecialCharacters(specialCharactersPref)
-}
+
+
+
 
 function promptLowerCase() {
     //this variable belongs to this function :) 
-    var lowerCasePref= confirm("Click OK to confirm including lower case letters?");
+lowerCasePref= confirm("Click OK to confirm including lower case letters?");
     function checkLowerCasePref(preference){
         if(lowerCasePref){
             lowerCase=true
@@ -55,8 +64,11 @@ function promptLowerCase() {
 
 //this function can be 
 function promptNumbers() {
-    var numbersPref= confirm("Click OK to confirm including numbers?");
-    function checkNumbersPref(preference){
+numbersPref= confirm("Click OK to confirm including numbers?");
+}
+
+
+function checkNumbersPref(preference){
         if(numbersPref){
             numbers=true
         }
@@ -68,7 +80,7 @@ function promptNumbers() {
 
     //this function can be 
 function promptUpperCase() {
-    var upperCasePref= confirm("Click OK to confirm including special characters?");
+upperCasePref= confirm("Click OK to confirm including upper case letters?");
     function checkUpperCase(preference){
         if(upperCasePref){
             upperCases=true
@@ -86,28 +98,53 @@ function promptUpperCase() {
 
 
     
-    }
-    checkLowerCasePref(lowerCasePref)
+    
+    //checkLowerCasePref(lowerCasePref)
     var randomPasswordValue=generateRandomPassword(passwordLength)
     var passwordArea=document.getElementById('password')
     passwordArea.innerHTML=randomPasswordValue
     }
-
+ 
 function generateRandomPassword(passwordLength){
     var result=''
-    if(!lowerCase && specialCharacters){
-        allCharacters=[...upperCaseCharactersArray,...numbersArray,...specialCharactersArray]
-    }
-    else if(!lowerCase && !specialCharacters){
-        allCharacters=[...upperCaseCharactersArray,...numbersArray]
-    }
-    else if(lowerCase && !specialCharacters){
-        allCharacters=[...upperCaseCharactersArray,...numbersArray,...lowerCaseCharactersArray]
-    }
-    else {
-        allCharacters=[...upperCaseCharactersArray,...numbersArray,...lowerCaseCharactersArray,...specialCharactersArray]
+    // if(specialCharactersPref){
+    //     allCharacters=[...upperCaseCharactersArray,...numbersArray,...specialCharactersArray]
+    // }
+    // else if(!lowerCase && !specialCharactersPref){
+    //     allCharacters=[...upperCaseCharactersArray,...numbersArray]
+    // }
+    // else if(lowerCase && !specialCharactersPref){
+    //     allCharacters=[...upperCaseCharactersArray,...numbersArray,...lowerCaseCharactersArray]
+    // }
 
+    // else if(!lowerCase && !specialCharactersPref){
+    //     allCharacters=[...upperCaseCharactersArray,...numbersArray]
+    // }
+    // else {
+    //     allCharacters=[...upperCaseCharactersArray,...numbersArray,...lowerCaseCharactersArray,...specialCharactersArray]
+
+    // }
+
+// 
+var tempAllCharacters=[...upperCaseCharactersArray,...numbersArray,...lowerCaseCharactersArray,...specialCharactersArray]
+
+    if(specialCharactersPref === false ){
+       // allCharacters= 
+     allCharacters=  tempAllCharacters.toString().replace(specialCharactersArray,"").split("")
     }
+    //var num=5 assignment
+     //"5"== 5 true, it only cares about the value not datatype
+     //"5"=== 5 false, cares about value and datatype
+    if(lowerCasePref === false){
+        
+    }
+    if(upperCasePref === false){
+        
+    }
+    if(numbersPref === false){
+        
+    }
+
     for ( var i = 0; i < passwordLength; i++ ) {
         var allCharsString=allCharacters.join('')
         result += allCharsString.charAt(Math.floor(Math.random() * allCharacters.length));
@@ -115,7 +152,7 @@ function generateRandomPassword(passwordLength){
     return result
 }
 
-
+ 
 
 // Write password to the #password input
 function writePassword() {
