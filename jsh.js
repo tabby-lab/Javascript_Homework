@@ -11,7 +11,7 @@ var passwordLength = 0
 var specialCharactersPref;
 var numbersPref;
 var upperCasePref;
-var lowerCasePref;
+var lowerCasePref
 
 
 function promptPassword() {
